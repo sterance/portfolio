@@ -5,6 +5,7 @@ import { theme, type ThemeMode } from '../../styles/theme';
 import { FloatingNav } from '../navigation/FloatingNav';
 import { useKeyboardNavigation } from '../../hooks/useKeyboardNavigation';
 import { FaMoon, FaSun } from 'react-icons/fa';
+import BasicMenu from '../Menu';
 
 interface LayoutProps {
   children: ReactNode;
@@ -270,7 +271,12 @@ export const Layout = ({ children, mode, onToggleTheme }: LayoutProps) => {
               role="heading"
               aria-level={1}
             >
-              Portfolio <span style={{ fontWeight: 400 }}>|</span> <a href="#">CV</a>
+              Portfolio <span style={{ fontWeight: 400 }}>|</span>&nbsp;
+              {/* <a href="#">CV</a> */}
+              <BasicMenu
+                label="CV"
+                menuItems={[".docx", ".pdf", ".md", "LaTeX"]}
+              />
             </Logo>
             <NavActions>
               <NavLinks role="list">
