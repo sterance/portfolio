@@ -1,12 +1,15 @@
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { ReactNode, useEffect } from 'react';
-import { theme } from '../../styles/theme';
+import { theme, type ThemeMode } from '../../styles/theme';
 import { FloatingNav } from '../navigation/FloatingNav';
 import { useKeyboardNavigation } from '../../hooks/useKeyboardNavigation';
+import { FaMoon, FaSun } from 'react-icons/fa';
 
 interface LayoutProps {
   children: ReactNode;
+  mode: ThemeMode;
+  onToggleTheme: () => void;
 }
 
 const LayoutWrapper = styled.div`
@@ -35,7 +38,6 @@ const LayoutWrapper = styled.div`
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  overflow-x: hidden;
   position: relative;
   background: transparent;
 
@@ -111,7 +113,7 @@ const NavLinks = styled.div`
 
     &:hover {
       color: ${theme.colors.light};
-      background-color: rgba(255, 255, 255, 0.1);
+      background-color: ${theme.colors.overlay.light};
     }
   }
 
@@ -119,6 +121,85 @@ const NavLinks = styled.div`
     gap: ${theme.spacing.md};
   }
 `;
+
+const NavActions = styled.div`
+  display: flex;
+  align-items: center;
+  gap: ${theme.spacing.md};
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    gap: ${theme.spacing.sm};
+  }
+`;
+
+const ThemeToggle = styled.button`
+  border: 1px solid ${theme.colors.surfaceBorder};
+  background: ${theme.colors.gradient.glass};
+  color: ${theme.colors.textLight};
+  border-radius: 999px;
+  min-width: 66px;
+  height: 34px;
+  padding: 0 ${theme.spacing.xs};
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  transition: all ${theme.transitions.default};
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      120deg,
+      ${theme.colors.overlay.light},
+      transparent 65%
+    );
+    opacity: 0.6;
+    pointer-events: none;
+  }
+
+  &:hover {
+    background: ${theme.colors.gradient.glass};
+    color: ${theme.colors.light};
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: ${theme.colors.shadow.ringSoft}, ${theme.colors.shadow.ringStrong};
+  }
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    min-width: 58px;
+    height: 30px;
+  }
+`;
+
+const ToggleThumb = styled.span`
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: ${theme.colors.accent};
+  color: ${theme.colors.textDark};
+  font-size: 0.85rem;
+  box-shadow: ${theme.colors.shadow.accentSoft};
+  transition: box-shadow 0.3s ease, background 0.3s ease;
+  position: relative;
+  z-index: 1;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    width: 20px;
+    height: 20px;
+    font-size: 0.75rem;
+  }
+`;
+
+const ToggleThumbMotion = motion(ToggleThumb);
+const ToggleIconMotion = motion.span;
 
 const Main = styled.main`
   flex: 1;
@@ -160,7 +241,7 @@ const Footer = styled.footer`
   }
 `;
 
-export const Layout = ({ children }: LayoutProps) => {
+export const Layout = ({ children, mode, onToggleTheme }: LayoutProps) => {
   useKeyboardNavigation();
 
   useEffect(() => {
@@ -189,14 +270,38 @@ export const Layout = ({ children }: LayoutProps) => {
               role="heading"
               aria-level={1}
             >
-              Portfolio
+              Portfolio <span style={{ fontWeight: 400 }}>|</span> <a href="#">CV</a>
             </Logo>
-            <NavLinks role="list">
-              <a href="#about" role="listitem" aria-label="About section">About</a>
-              <a href="#projects" role="listitem" aria-label="Projects section">Projects</a>
-              <a href="#skills" role="listitem" aria-label="Skills section">Skills</a>
-              <a href="#contact" role="listitem" aria-label="Contact section">Contact</a>
-            </NavLinks>
+            <NavActions>
+              <NavLinks role="list">
+                <a href="#home" role="listitem" aria-label="Home section">Home</a>
+                <a href="#projects" role="listitem" aria-label="Projects section">Projects</a>
+                <a href="#skills" role="listitem" aria-label="Skills section">Skills</a>
+                <a href="#contact" role="listitem" aria-label="Contact section">Contact</a>
+              </NavLinks>
+              <ThemeToggle
+                type="button"
+                onClick={onToggleTheme}
+                aria-label={mode === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+                aria-pressed={mode === 'light'}
+              >
+                <ToggleThumbMotion
+                  aria-hidden="true"
+                  initial={false}
+                  animate={{ x: mode === 'dark' ? 30 : 0 }}
+                  transition={{ type: 'spring', stiffness: 380, damping: 28, mass: 0.8 }}
+                >
+                  <ToggleIconMotion
+                    key={mode}
+                    initial={{ rotate: mode === 'light' ? -18 : 18, scale: 0.86, opacity: 0.6 }}
+                    animate={{ rotate: 0, scale: 1, opacity: 1 }}
+                    transition={{ duration: 0.24, ease: 'easeOut' }}
+                  >
+                    {mode === 'dark' ? <FaMoon /> : <FaSun />}
+                  </ToggleIconMotion>
+                </ToggleThumbMotion>
+              </ThemeToggle>
+            </NavActions>
           </div>
         </Nav>
       </Header>
@@ -206,7 +311,7 @@ export const Layout = ({ children }: LayoutProps) => {
       <FloatingNav />
       <Footer role="contentinfo">
         <div className="container">
-          <p>© {new Date().getFullYear()} Your Name. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Chris Smith. All rights reserved.</p>
         </div>
       </Footer>
     </LayoutWrapper>

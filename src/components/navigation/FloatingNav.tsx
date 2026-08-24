@@ -9,7 +9,7 @@ const NavContainer = styled(motion.nav)`
   top: 50%;
   transform: translateY(-50%);
   z-index: 1000;
-  background: ${theme.colors.glass.background}80;
+  background: ${theme.colors.glass.floating};
   backdrop-filter: blur(10px);
   padding: ${theme.spacing.lg};
   border-radius: 50px;
@@ -17,8 +17,8 @@ const NavContainer = styled(motion.nav)`
   flex-direction: column;
   gap: ${theme.spacing.md};
   box-shadow: 
-    0 4px 24px rgba(0, 0, 0, 0.1),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+    ${theme.colors.shadow.panel},
+    inset 0 0 0 1px ${theme.colors.surfaceBorder};
 
   @media print {
     display: none;
@@ -41,8 +41,8 @@ const NavDot = styled(motion.button)<{ active: boolean }>`
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  background: ${props => props.active ? theme.colors.accent : 'rgba(255, 255, 255, 0.3)'};
-  border: 2px solid ${props => props.active ? theme.colors.accent : 'rgba(255, 255, 255, 0.5)'};
+  background: ${props => props.active ? theme.colors.accent : theme.colors.navDotInactive};
+  border: 2px solid ${props => props.active ? theme.colors.accent : theme.colors.navDotBorder};
   cursor: pointer;
   position: relative;
   opacity: ${props => props.active ? 1 : 0.7};
@@ -57,14 +57,14 @@ const NavDot = styled(motion.button)<{ active: boolean }>`
     opacity: 1;
     transform: scale(1.2);
     border-color: ${theme.colors.accent};
-    background: ${props => props.active ? theme.colors.accent : 'rgba(255, 255, 255, 0.5)'};
+    background: ${props => props.active ? theme.colors.accent : theme.colors.navDotBorder};
   }
 
   &:focus {
     outline: none;
     box-shadow: 
-      0 0 0 2px ${theme.colors.accent}40,
-      0 0 0 4px ${theme.colors.accent}20;
+      ${theme.colors.shadow.ringSoft},
+      ${theme.colors.shadow.ringStrong};
   }
 
   &::before {
@@ -82,8 +82,8 @@ const NavDot = styled(motion.button)<{ active: boolean }>`
     pointer-events: none;
     transition: all ${theme.transitions.default};
     box-shadow: 
-      0 4px 12px rgba(0, 0, 0, 0.1),
-      inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+      ${theme.colors.shadow.panel},
+      inset 0 0 0 1px ${theme.colors.surfaceBorder};
     color: ${theme.colors.light};
     font-weight: 500;
     letter-spacing: 0.5px;
@@ -120,14 +120,10 @@ const ProgressBar = styled(motion.div)`
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(
-    90deg,
-    ${theme.colors.accent},
-    ${theme.colors.accent}dd
-  );
+  background: ${theme.colors.accent};
   transform-origin: 0%;
   z-index: 1000;
-  box-shadow: 0 0 10px ${theme.colors.accent}80;
+  box-shadow: 0 0 10px color-mix(in srgb, ${theme.colors.accent} 50%, transparent);
 
   @media print {
     display: none;
@@ -139,14 +135,14 @@ const ProgressBar = styled(motion.div)`
 `;
 
 const sections = [
-  { id: 'hero', name: 'Home' },
+  { id: 'home', name: 'Home' },
   { id: 'projects', name: 'Projects' },
   { id: 'skills', name: 'Skills' },
   { id: 'contact', name: 'Contact' }
 ];
 
 export const FloatingNav = () => {
-  const [activeSection, setActiveSection] = useState('hero');
+  const [activeSection, setActiveSection] = useState('home');
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 100,

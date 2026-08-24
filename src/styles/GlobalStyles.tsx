@@ -1,8 +1,36 @@
 import { Global, css } from '@emotion/react';
-import { theme } from './theme';
+import { theme, type ThemeValues } from './theme';
 
-const globalStyles = css`
+const globalStyles = (themeValues: ThemeValues) => css`
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700&display=swap');
+
+  :root {
+    --color-primary: ${themeValues.colors.primary};
+    --color-secondary: ${themeValues.colors.secondary};
+    --color-accent: ${themeValues.colors.accent};
+    --color-light: ${themeValues.colors.light};
+    --color-text: ${themeValues.colors.text};
+    --color-text-light: ${themeValues.colors.textLight};
+    --color-text-dark: ${themeValues.colors.textDark};
+    --color-text-muted: ${themeValues.colors.textMuted};
+    --color-surface-border: ${themeValues.colors.surfaceBorder};
+    --color-nav-dot-inactive: ${themeValues.colors.navDotInactive};
+    --color-nav-dot-border: ${themeValues.colors.navDotBorder};
+    --glass-background: ${themeValues.colors.glass.background};
+    --glass-border: ${themeValues.colors.glass.border};
+    --glass-card: ${themeValues.colors.glass.card};
+    --glass-floating: ${themeValues.colors.glass.floating};
+    --gradient-main: ${themeValues.colors.gradient.main};
+    --gradient-accent: ${themeValues.colors.gradient.accent};
+    --gradient-glass: ${themeValues.colors.gradient.glass};
+    --overlay-light: ${themeValues.colors.overlay.light};
+    --overlay-dark: ${themeValues.colors.overlay.dark};
+    --shadow-panel: ${themeValues.colors.shadow.panel};
+    --shadow-ring-soft: ${themeValues.colors.shadow.ringSoft};
+    --shadow-ring-strong: ${themeValues.colors.shadow.ringStrong};
+    --shadow-accent-soft: ${themeValues.colors.shadow.accentSoft};
+    --shadow-accent-medium: ${themeValues.colors.shadow.accentMedium};
+  }
 
   *, *::before, *::after {
     margin: 0;
@@ -173,7 +201,7 @@ const globalStyles = css`
   ::-webkit-scrollbar-thumb {
     background: ${theme.colors.glass.card};
     border-radius: 5px;
-    border: 2px solid ${theme.colors.glass.border};
+    border: 2px solid ${theme.colors.surfaceBorder};
   }
 
   ::-webkit-scrollbar-thumb:hover {
@@ -194,4 +222,10 @@ const globalStyles = css`
   }
 `;
 
-export const GlobalStyles = () => <Global styles={globalStyles} />;
+type GlobalStylesProps = {
+  themeValues: ThemeValues;
+};
+
+export const GlobalStyles = ({ themeValues }: GlobalStylesProps) => (
+  <Global styles={globalStyles(themeValues)} />
+);

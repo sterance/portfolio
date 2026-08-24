@@ -62,7 +62,7 @@ const SkillsContainer = styled.div`
   max-width: 1200px;
   margin-top: ${theme.spacing.xl};
 
-  @media (min-width: ${theme.breakpoints.md}) {
+  @media (min-width: ${theme.breakpoints.lg}) {
     grid-template-columns: repeat(3, 1fr);
     gap: ${theme.spacing.xl};
   }

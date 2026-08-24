@@ -1,9 +1,9 @@
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useMemo, useState } from 'react';
 import { Layout } from './components/layout/Layout';
 import { Hero } from './components/sections/Hero';
 import { GlobalStyles } from './styles/GlobalStyles';
 import { ThemeProvider } from '@emotion/react';
-import { theme } from './styles/theme';
+import { getThemeValues, theme, type ThemeMode } from './styles/theme';
 import styled from '@emotion/styled';
 
 // Lazy load non-critical components
@@ -27,11 +27,45 @@ const LoadingFallback = styled.div`
   }
 `;
 
+const THEME_STORAGE_KEY = 'portfolio-theme-mode';
+
+const getInitialThemeMode = (): ThemeMode => {
+  if (typeof window === 'undefined') {
+    return 'dark';
+  }
+
+  try {
+    const storedMode = window.localStorage.getItem(THEME_STORAGE_KEY);
+    if (storedMode === 'dark' || storedMode === 'light') {
+      return storedMode;
+    }
+  } catch {
+    // Ignore storage errors and fall back to system preference.
+  }
+
+  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+};
+
 function App() {
+  const [mode, setMode] = useState<ThemeMode>(getInitialThemeMode);
+  const themeValues = useMemo(() => getThemeValues(mode), [mode]);
+
+  const handleToggleTheme = () => {
+    setMode((currentMode) => {
+      const nextMode: ThemeMode = currentMode === 'dark' ? 'light' : 'dark';
+      try {
+        window.localStorage.setItem(THEME_STORAGE_KEY, nextMode);
+      } catch {
+        // Ignore storage errors to keep toggle interaction working.
+      }
+      return nextMode;
+    });
+  };
+
   return (
     <ThemeProvider theme={theme}>
-      <GlobalStyles />
-      <Layout>
+      <GlobalStyles themeValues={themeValues} />
+      <Layout mode={mode} onToggleTheme={handleToggleTheme}>
         {/* Hero section is critical for LCP, so keep it eager loaded */}
         <Hero />
         

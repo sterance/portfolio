@@ -1,10 +1,7 @@
 import styled from '@emotion/styled';
 import { theme } from '../../styles/theme';
 import { keyframes } from '@emotion/react';
-import { lazy, Suspense } from 'react';
-const FaGithub = lazy(() => import('react-icons/fa').then(mod => ({ default: mod.FaGithub })));
-const FaLinkedin = lazy(() => import('react-icons/fa').then(mod => ({ default: mod.FaLinkedin })));
-const FaEnvelope = lazy(() => import('react-icons/fa').then(mod => ({ default: mod.FaEnvelope })));
+import { FaEnvelope, FaGithub, FaLinkedin } from 'react-icons/fa';
 
 const HeroSection = styled.section`
   min-height: calc(100vh - 4.5rem);
@@ -122,12 +119,12 @@ const SocialLinks = styled.div`
 
 export const Hero = () => {
   return (
-    <HeroSection id="hero" role="region" aria-label="Introduction">
+    <HeroSection id="home" role="region" aria-label="Introduction">
       <div className="container">
         <HeroContent>
           <div>
             <Title role="heading" aria-level={2}>
-              Hi, I'm [Your Name]
+              Hi, I'm Chris Smith
             </Title>
             <Subtitle role="heading" aria-level={3}>
               Full Stack Developer
@@ -138,15 +135,13 @@ export const Hero = () => {
             </Description>
             <SocialLinks role="list" aria-label="Social media links">
               <a 
-                href="https://github.com" 
+                href="https://github.com/sterance" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 aria-label="Visit my GitHub profile"
                 role="listitem"
               >
-                <Suspense fallback={<div style={{ width: '1.5rem', height: '1.5rem' }} />}>
-                  <FaGithub aria-hidden="true" />
-                </Suspense>
+                <FaGithub aria-hidden="true" />
                 <span className="sr-only">GitHub</span>
               </a>
               <a 
@@ -156,19 +151,15 @@ export const Hero = () => {
                 aria-label="Visit my LinkedIn profile"
                 role="listitem"
               >
-                <Suspense fallback={<div style={{ width: '1.5rem', height: '1.5rem' }} />}>
-                  <FaLinkedin aria-hidden="true" />
-                </Suspense>
+                <FaLinkedin aria-hidden="true" />
                 <span className="sr-only">LinkedIn</span>
               </a>
               <a 
-                href="mailto:your.email@example.com"
+                href="mailto:chris@smith-c.com"
                 aria-label="Send me an email"
                 role="listitem"
               >
-                <Suspense fallback={<div style={{ width: '1.5rem', height: '1.5rem' }} />}>
-                  <FaEnvelope aria-hidden="true" />
-                </Suspense>
+                <FaEnvelope aria-hidden="true" />
                 <span className="sr-only">Email</span>
               </a>
             </SocialLinks>

@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-const sections = ['hero', 'projects', 'skills', 'contact'];
+const sections = ['home', 'projects', 'skills', 'contact'];
 
 export const useKeyboardNavigation = () => {
   useEffect(() => {
