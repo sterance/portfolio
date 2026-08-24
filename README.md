@@ -12,7 +12,7 @@ Personal portfolio site based on the [simpleC0de/portfolio-01](https://github.co
 
 ## Local development
 
-Requires Node.js 18+ (CI uses Node 20).
+Requires Node.js 18+ (CI uses Node 24).
 
 ```bash
 npm ci
