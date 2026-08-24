@@ -5,7 +5,7 @@ on:
   push:
     branches:
       - main
-  
+
   workflow_dispatch:
 
 jobs:
@@ -16,17 +16,21 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-# BUILD STEP FOR VITE (UNCOMMENT WHEN PUSHING VITE/REACT SITE)
-#       - name: Build Project
-#         run: |
-#           npm install
-#           npm run build
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Build Project
+        run: |
+          npm ci
+          npm run build
 
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/pages-action@v1
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          
           projectName: "portfolio"
-          directory: "."
+          directory: "dist"
