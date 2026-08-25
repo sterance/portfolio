@@ -9,22 +9,38 @@ import { theme } from '../styles/theme';
 
 const muiTheme = createTheme();
 
+export type CvFile = {
+  label: string;
+  viewUrl: string;
+  downloadUrl: string;
+  downloadName: string;
+}
+
 type BasicMenuProps = {
   label: string;
-  menuItems: string[];
+  files: CvFile[];
 };
 
-export default function BasicMenu({ label, menuItems }: BasicMenuProps) {
+export default function BasicMenu({ label, files }: BasicMenuProps) {
   const id = React.useId();
   const buttonId = `${id}-button`;
   const menuId = `${id}-menu`;
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => setAnchorEl(event.currentTarget);
+  const handleClose = () => setAnchorEl(null);
+
+  const handleView = (viewUrl: string) => {
+    window.open(viewUrl, '_blank', 'noopener,noreferrer');
   };
-  const handleClose = () => {
-    setAnchorEl(null);
+
+  const handleDownload = (downloadUrl: string, downloadName: string) => {
+    const link = document.createElement('a');
+    link.href = downloadUrl;
+    link.download = downloadName;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   return (
@@ -37,18 +53,10 @@ export default function BasicMenu({ label, menuItems }: BasicMenuProps) {
           aria-expanded={open}
           onClick={handleClick}
           sx={{
-            minWidth: 0,
-            padding: 0,
-            color: 'inherit',
-            fontFamily: 'inherit',
-            fontSize: 'inherit',
-            fontWeight: 'inherit',
-            lineHeight: 'inherit',
-            textTransform: 'none',
-            verticalAlign: 'baseline',
-            '&:hover': {
-              backgroundColor: 'transparent',
-            },
+            minWidth: 0, padding: 0, color: 'inherit', fontFamily: 'inherit',
+            fontSize: 'inherit', fontWeight: 'inherit', lineHeight: 'inherit',
+            textTransform: 'none', verticalAlign: 'baseline',
+            '&:hover': { backgroundColor: 'transparent' },
           }}
         >
           {label}
@@ -58,56 +66,44 @@ export default function BasicMenu({ label, menuItems }: BasicMenuProps) {
           anchorEl={anchorEl}
           open={open}
           onClose={handleClose}
-          slotProps={{
-            list: {
-              'aria-labelledby': buttonId,
-            },
-          }}
+          slotProps={{ list: { 'aria-labelledby': buttonId } }}
         >
-          {menuItems.map((item) => (
+          {files.map((file) => (
             <MenuItem
-              key={item}
-              onClick={handleClose}
+              key={file.label}
               sx={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: 2,
-                minWidth: 120,
-                '& .menu-action': {
-                  opacity: 0.5,
-                  transition: 'opacity 150ms ease, color 150ms ease',
-                },
-                '& .view-action': {
-                  color: theme.colors.accent,
-                  opacity: 1,
-                },
-                '&:has(.download-action:hover) .view-action': {
-                  color: 'inherit',
-                  opacity: 0.5,
-                },
-                '&:has(.download-action:hover) .download-action': {
-                  color: theme.colors.accent,
-                  opacity: 1,
-                },
+                display: 'flex', alignItems: 'center', gap: 2, minWidth: 120,
+                '& .menu-action': { opacity: 0.5, transition: 'opacity 150ms ease, color 150ms ease' },
+                '& .view-action': { color: theme.colors.accent, opacity: 1 },
+                '&:has(.download-action:hover) .view-action': { color: 'inherit', opacity: 0.5 },
+                '&:has(.download-action:hover) .download-action': { color: theme.colors.accent, opacity: 1 },
               }}
             >
-              <span>{item}</span>
+              <span>{file.label}</span>
               <span style={{ display: 'flex', gap: 4, marginLeft: 'auto' }}>
                 <IconButton
                   className="menu-action view-action"
-                  aria-label={`View ${item}`}
-                  title={`View ${item}`}
+                  aria-label={`View ${file.label}`}
+                  title={`View ${file.label}`}
                   size="small"
-                  onClick={(event) => event.stopPropagation()}
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    handleView(file.viewUrl);
+                    handleClose();
+                  }}
                 >
                   <FaEye size={14} />
                 </IconButton>
                 <IconButton
                   className="menu-action download-action"
-                  aria-label={`Download ${item}`}
-                  title={`Download ${item}`}
+                  aria-label={`Download ${file.label}`}
+                  title={`Download ${file.label}`}
                   size="small"
-                  onClick={(event) => event.stopPropagation()}
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    handleDownload(file.downloadUrl, file.downloadName);
+                    handleClose();
+                  }}
                 >
                   <FaDownload size={14} />
                 </IconButton>

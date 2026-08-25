@@ -5,8 +5,38 @@ import { theme, type ThemeMode } from '../../styles/theme';
 import { FloatingNav } from '../navigation/FloatingNav';
 import { useKeyboardNavigation } from '../../hooks/useKeyboardNavigation';
 import { FaMoon, FaSun } from 'react-icons/fa';
-import BasicMenu from '../Menu';
+import BasicMenu, { CvFile } from '../Menu';
 
+const CV_BASE = '/cv/Christopher Smith - CV';
+
+const cvFiles: CvFile[] = [
+  {
+    label: '.pdf',
+    downloadUrl: `${CV_BASE}.pdf`,
+    downloadName: 'chris-smith-cv.pdf',
+    viewUrl: `${CV_BASE}.pdf`,
+  },
+  {
+    label: '.docx',
+    downloadUrl: `${CV_BASE}.docx`,
+    downloadName: 'chris-smith-cv.docx',
+    viewUrl: `https://view.officeapps.live.com/op/view.aspx?src=${encodeURIComponent(
+      `${window.location.origin}${CV_BASE}.docx`
+    )}`,
+  },
+  {
+    label: '.md',
+    downloadUrl: `${CV_BASE}.md`,
+    downloadName: 'chris-smith-cv.md',
+    viewUrl: `${CV_BASE}.html`,
+  },
+  {
+    label: 'LaTeX',
+    downloadUrl: `${CV_BASE}.tex`,
+    downloadName: 'chris-smith-cv.tex',
+    viewUrl: `${CV_BASE}.pdf`,
+  },
+];
 interface LayoutProps {
   children: ReactNode;
   mode: ThemeMode;
@@ -273,10 +303,7 @@ export const Layout = ({ children, mode, onToggleTheme }: LayoutProps) => {
             >
               Portfolio <span style={{ fontWeight: 400 }}>|</span>&nbsp;
               {/* <a href="#">CV</a> */}
-              <BasicMenu
-                label="CV"
-                menuItems={[".docx", ".pdf", ".md", "LaTeX"]}
-              />
+              <BasicMenu label="CV" files={cvFiles} />
             </Logo>
             <NavActions>
               <NavLinks role="list">
