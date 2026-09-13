@@ -1,7 +1,7 @@
-import styled from '@emotion/styled';
-import { motion } from 'framer-motion';
-import Project, { ProjectData } from '../cards/Project';
-import { theme } from '../../styles/theme';
+import styled from "@emotion/styled";
+import { motion } from "framer-motion";
+import Project, { ProjectData } from "../cards/Project";
+import { theme } from "../../styles/theme";
 
 const ProjectsSection = styled.section`
   min-height: 100vh;
@@ -22,9 +22,9 @@ const SectionTitle = styled(motion.h2)`
   margin-bottom: calc(${theme.spacing.xl} * 1.5);
   color: ${theme.colors.textLight};
   position: relative;
-  
+
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     bottom: -${theme.spacing.md};
     left: 50%;
@@ -56,21 +56,21 @@ const ProjectGrid = styled.div`
 const projects: ProjectData[] = [
   {
     id: 1,
-    title: "Project One",
-    description: "A full-stack web application with real-time features and modern UI/UX design.",
-    image: "https://via.placeholder.com/400x200",
-    techStack: ["React", "Node.js", "MongoDB", "Socket.IO"],
-    githubUrl: "https://github.com/sterance/travel-planner",
-    liveUrl: "https://travel.smith-c.com/demo",
+    title: "EzQuote",
+    description: "An app for building canned customer-service responses from reusable templates with placeholder values, available as a web app or an Electron desktop app.",
+    image: "/projects/ezquote.png",
+    techStack: ["React", "TypeScript", "Material UI", "Electron", "dnd-kit"],
+    githubUrl: "https://github.com/sterance/EzQuote",
+    liveUrl: "https://ezquote.smith-c.com",
   },
   {
     id: 2,
-    title: "Project Two",
-    description: "Mobile-first e-commerce platform with seamless payment integration.",
-    image: "https://via.placeholder.com/400x200",
-    techStack: ["Next.js", "TypeScript", "Stripe", "Tailwind"],
-    githubUrl: "https://github.com",
-    liveUrl: "https://example.com",
+    title: "Travel Planner",
+    description: "A full-stack travel planning application with interactive maps, scheduling, and multi-currency support for organizing trip itineraries.",
+    image: "/projects/travel-planner.png",
+    techStack: ["React", "TypeScript", "Material UI", "Leaflet", "Node.js"],
+    githubUrl: "https://github.com/sterance/travel-planner",
+    liveUrl: "https://travel.smith-c.com/demo",
   },
 ];
 
@@ -88,26 +88,14 @@ const Projects = () => {
   return (
     <ProjectsSection id="projects" role="region" aria-label="Featured Projects">
       <div className="container">
-        <SectionTitle
-          initial={{ opacity: 0, y: -20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          role="heading"
-          aria-level={2}
-        >
+        <SectionTitle initial={{ opacity: 0, y: -20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }} role="heading" aria-level={2}>
           Featured Projects
         </SectionTitle>
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-        >
+        <motion.div variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true }}>
           <ProjectGrid role="list">
-          {projects.map((project) => (
-            <Project key={project.id} project={project} />
-          ))}
+            {projects.map((project) => (
+              <Project key={project.id} project={project} />
+            ))}
           </ProjectGrid>
         </motion.div>
       </div>

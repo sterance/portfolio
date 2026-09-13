@@ -1,40 +1,32 @@
-import styled from '@emotion/styled';
-import { motion } from 'framer-motion';
-import { ReactNode, useEffect } from 'react';
-import { theme, type ThemeMode } from '../../styles/theme';
-import { FloatingNav } from '../navigation/FloatingNav';
-import { useKeyboardNavigation } from '../../hooks/useKeyboardNavigation';
-import { FaMoon, FaSun } from 'react-icons/fa';
-import BasicMenu, { CvFile } from '../Menu';
+import styled from "@emotion/styled";
+import { motion } from "framer-motion";
+import { ReactNode, useEffect } from "react";
+import { theme, type ThemeMode } from "../../styles/theme";
+import { FloatingNav } from "../navigation/FloatingNav";
+import { useKeyboardNavigation } from "../../hooks/useKeyboardNavigation";
+import { FaMoon, FaSun } from "react-icons/fa";
+import BasicMenu, { CvFile } from "../Menu";
 
-const CV_BASE = '/cv/Christopher Smith - CV';
+const CV_BASE = "/cv/Christopher Smith - CV";
 
 const cvFiles: CvFile[] = [
   {
-    label: '.pdf',
+    label: ".pdf",
     downloadUrl: `${CV_BASE}.pdf`,
-    downloadName: 'chris-smith-cv.pdf',
+    downloadName: "chris-smith-cv.pdf",
     viewUrl: `${CV_BASE}.pdf`,
   },
   {
-    label: '.docx',
+    label: ".docx",
     downloadUrl: `${CV_BASE}.docx`,
-    downloadName: 'chris-smith-cv.docx',
-    viewUrl: `https://view.officeapps.live.com/op/view.aspx?src=${encodeURIComponent(
-      `${window.location.origin}${CV_BASE}.docx`
-    )}`,
+    downloadName: "chris-smith-cv.docx",
+    viewUrl: `https://view.officeapps.live.com/op/view.aspx?src=${encodeURIComponent(`${window.location.origin}${CV_BASE}.docx`)}`,
   },
   {
-    label: '.md',
+    label: ".md",
     downloadUrl: `${CV_BASE}.md`,
-    downloadName: 'chris-smith-cv.md',
+    downloadName: "chris-smith-cv.md",
     viewUrl: `${CV_BASE}.html`,
-  },
-  {
-    label: 'LaTeX',
-    downloadUrl: `${CV_BASE}.tex`,
-    downloadName: 'chris-smith-cv.tex',
-    viewUrl: `${CV_BASE}.pdf`,
   },
 ];
 interface LayoutProps {
@@ -47,7 +39,7 @@ const LayoutWrapper = styled.div`
   @media print {
     background: white !important;
     color: black !important;
-    
+
     * {
       color: black !important;
       text-shadow: none !important;
@@ -73,17 +65,13 @@ const LayoutWrapper = styled.div`
   background: transparent;
 
   &::before {
-    content: '';
+    content: "";
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: radial-gradient(
-      circle at 70% 30%,
-      ${theme.colors.accent}15 0%,
-      transparent 100%
-    );
+    background: radial-gradient(circle at 70% 30%, ${theme.colors.accent}15 0%, transparent 100%);
     pointer-events: none;
     z-index: 0;
   }
@@ -102,7 +90,7 @@ const Header = styled.header`
     display: none;
   }
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     bottom: -20px;
     left: 0;
@@ -179,14 +167,10 @@ const ThemeToggle = styled.button`
   overflow: hidden;
 
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     inset: 0;
-    background: linear-gradient(
-      120deg,
-      ${theme.colors.overlay.light},
-      transparent 65%
-    );
+    background: linear-gradient(120deg, ${theme.colors.overlay.light}, transparent 65%);
     opacity: 0.6;
     pointer-events: none;
   }
@@ -218,7 +202,9 @@ const ToggleThumb = styled.span`
   color: ${theme.colors.textDark};
   font-size: 0.85rem;
   box-shadow: ${theme.colors.shadow.accentSoft};
-  transition: box-shadow 0.3s ease, background 0.3s ease;
+  transition:
+    box-shadow 0.3s ease,
+    background 0.3s ease;
   position: relative;
   z-index: 1;
 
@@ -262,7 +248,7 @@ const Footer = styled.footer`
   text-align: center;
   position: relative;
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     top: -20px;
     left: 0;
@@ -277,60 +263,39 @@ export const Layout = ({ children, mode, onToggleTheme }: LayoutProps) => {
 
   useEffect(() => {
     // Add keyboard navigation instructions to console
-    console.info(
-      'Keyboard Navigation:\n',
-      '- Arrow Up/Down or PageUp/PageDown: Navigate between sections\n',
-      '- Home: Go to top\n',
-      '- End: Go to bottom'
-    );
+    console.info("Keyboard Navigation:\n", "- Arrow Up/Down or PageUp/PageDown: Navigate between sections\n", "- Home: Go to top\n", "- End: Go to bottom");
   }, []);
 
   return (
     <LayoutWrapper>
-      <SkipLink href="#main-content">
-        Skip to main content
-      </SkipLink>
+      <SkipLink href="#main-content">Skip to main content</SkipLink>
 
       <Header role="banner">
         <Nav role="navigation" aria-label="Main navigation">
           <div className="container">
-            <Logo
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5 }}
-              role="heading"
-              aria-level={1}
-            >
+            <Logo initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }} role="heading" aria-level={1}>
               Portfolio <span style={{ fontWeight: 400 }}>|</span>&nbsp;
-              {/* <a href="#">CV</a> */}
               <BasicMenu label="CV" files={cvFiles} />
             </Logo>
             <NavActions>
               <NavLinks role="list">
-                <a href="#home" role="listitem" aria-label="Home section">Home</a>
-                <a href="#projects" role="listitem" aria-label="Projects section">Projects</a>
-                <a href="#skills" role="listitem" aria-label="Skills section">Skills</a>
-                <a href="#contact" role="listitem" aria-label="Contact section">Contact</a>
+                <a href="#home" role="listitem" aria-label="Home section">
+                  Home
+                </a>
+                <a href="#projects" role="listitem" aria-label="Projects section">
+                  Projects
+                </a>
+                <a href="#skills" role="listitem" aria-label="Skills section">
+                  Skills
+                </a>
+                <a href="#contact" role="listitem" aria-label="Contact section">
+                  Contact
+                </a>
               </NavLinks>
-              <ThemeToggle
-                type="button"
-                onClick={onToggleTheme}
-                aria-label={mode === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-                aria-pressed={mode === 'light'}
-              >
-                <ToggleThumbMotion
-                  aria-hidden="true"
-                  initial={false}
-                  animate={{ x: mode === 'dark' ? 30 : 0 }}
-                  transition={{ type: 'spring', stiffness: 380, damping: 28, mass: 0.8 }}
-                >
-                  <ToggleIconMotion
-                    key={mode}
-                    initial={{ rotate: mode === 'light' ? -18 : 18, scale: 0.86, opacity: 0.6 }}
-                    animate={{ rotate: 0, scale: 1, opacity: 1 }}
-                    transition={{ duration: 0.24, ease: 'easeOut' }}
-                  >
-                    {mode === 'dark' ? <FaMoon /> : <FaSun />}
+              <ThemeToggle type="button" onClick={onToggleTheme} aria-label={mode === "dark" ? "Switch to light mode" : "Switch to dark mode"} aria-pressed={mode === "light"}>
+                <ToggleThumbMotion aria-hidden="true" initial={false} animate={{ x: mode === "dark" ? 30 : 0 }} transition={{ type: "spring", stiffness: 380, damping: 28, mass: 0.8 }}>
+                  <ToggleIconMotion key={mode} initial={{ rotate: mode === "light" ? -18 : 18, scale: 0.86, opacity: 0.6 }} animate={{ rotate: 0, scale: 1, opacity: 1 }} transition={{ duration: 0.24, ease: "easeOut" }}>
+                    {mode === "dark" ? <FaMoon /> : <FaSun />}
                   </ToggleIconMotion>
                 </ToggleThumbMotion>
               </ThemeToggle>

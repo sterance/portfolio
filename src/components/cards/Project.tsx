@@ -1,7 +1,7 @@
-import styled from '@emotion/styled';
-import { motion } from 'framer-motion';
-import { FaExternalLinkAlt, FaGithub } from 'react-icons/fa';
-import { theme } from '../../styles/theme';
+import styled from "@emotion/styled";
+import { motion } from "framer-motion";
+import { FaExternalLinkAlt, FaGithub } from "react-icons/fa";
+import { theme } from "../../styles/theme";
 
 export type ProjectData = {
   id: number;
@@ -33,9 +33,9 @@ const Card = styled(motion.div)`
 const CardImage = styled.div<{ imageUrl: string }>`
   width: 100%;
   height: 180px;
-  background-image: url(${props => props.imageUrl});
+  background-image: url(${(props) => props.imageUrl});
   background-size: cover;
-  background-position: center;
+  background-position: top;
   position: relative;
 
   @media (min-width: ${theme.breakpoints.md}) {
@@ -43,7 +43,7 @@ const CardImage = styled.div<{ imageUrl: string }>`
   }
 
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     bottom: 0;
     left: 0;
@@ -152,16 +152,8 @@ type ProjectProps = {
 
 const Project = ({ project }: ProjectProps) => {
   return (
-    <Card
-      variants={cardVariants}
-      role="listitem"
-      aria-labelledby={`project-title-${project.id}`}
-    >
-      <CardImage
-        imageUrl={project.image}
-        role="img"
-        aria-label={`Screenshot of ${project.title}`}
-      />
+    <Card variants={cardVariants} role="listitem" aria-labelledby={`project-title-${project.id}`}>
+      <CardImage imageUrl={project.image} role="img" aria-label={`Screenshot of ${project.title}`} />
       <CardContent>
         <CardTitle id={`project-title-${project.id}`}>{project.title}</CardTitle>
         <CardDescription>{project.description}</CardDescription>
@@ -173,21 +165,11 @@ const Project = ({ project }: ProjectProps) => {
           ))}
         </TechStack>
         <CardLinks>
-          <a
-            href={project.githubUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={`View ${project.title} source code on GitHub`}
-          >
+          <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" aria-label={`View ${project.title} source code on GitHub`}>
             <FaGithub aria-hidden="true" />
             <span className="sr-only">GitHub repository</span>
           </a>
-          <a
-            href={project.liveUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={`Visit ${project.title} live site`}
-          >
+          <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" aria-label={`Visit ${project.title} live site`}>
             <FaExternalLinkAlt aria-hidden="true" />
             <span className="sr-only">Live site</span>
           </a>
