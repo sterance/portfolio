@@ -61,7 +61,7 @@ const projects: ProjectData[] = [
     image: "/projects/ezquote.png",
     techStack: ["React", "TypeScript", "Material UI", "Electron", "dnd-kit"],
     githubUrl: "https://github.com/sterance/EzQuote",
-    liveUrl: "https://ezquote.smith-c.com",
+    liveUrl: "https://ezquote.smith-c.com/demo",
   },
   {
     id: 2,
