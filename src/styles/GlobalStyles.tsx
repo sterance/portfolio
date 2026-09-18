@@ -1,8 +1,8 @@
-import { Global, css } from '@emotion/react';
-import { theme, type ThemeValues } from './theme';
+import { Global, css } from "@emotion/react";
+import { theme, type ThemeValues } from "./theme";
 
 const globalStyles = (themeValues: ThemeValues) => css`
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700&display=swap');
+  @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700&display=swap");
 
   :root {
     --color-primary: ${themeValues.colors.primary};
@@ -32,7 +32,9 @@ const globalStyles = (themeValues: ThemeValues) => css`
     --shadow-accent-medium: ${themeValues.colors.shadow.accentMedium};
   }
 
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -65,7 +67,12 @@ const globalStyles = (themeValues: ThemeValues) => css`
     flex-direction: column;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-family: ${theme.fonts.heading};
     font-weight: 600;
     line-height: 1.3;
@@ -103,7 +110,7 @@ const globalStyles = (themeValues: ThemeValues) => css`
   }
 
   .container {
-    width: min(90%, 1200px);
+    width: min(90%, 1600px);
     margin-inline: auto;
     padding-inline: ${theme.spacing.md};
     position: relative;
@@ -133,7 +140,9 @@ const globalStyles = (themeValues: ThemeValues) => css`
       break-inside: avoid;
     }
 
-    h1, h2, h3 {
+    h1,
+    h2,
+    h3 {
       page-break-after: avoid;
       break-after: avoid;
     }
@@ -164,7 +173,8 @@ const globalStyles = (themeValues: ThemeValues) => css`
     }
 
     /* Improve readability */
-    p, li {
+    p,
+    li {
       orphans: 3;
       widows: 3;
     }
@@ -226,6 +236,4 @@ type GlobalStylesProps = {
   themeValues: ThemeValues;
 };
 
-export const GlobalStyles = ({ themeValues }: GlobalStylesProps) => (
-  <Global styles={globalStyles(themeValues)} />
-);
+export const GlobalStyles = ({ themeValues }: GlobalStylesProps) => <Global styles={globalStyles(themeValues)} />;

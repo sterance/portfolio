@@ -275,7 +275,7 @@ export const Layout = ({ children, mode, onToggleTheme }: LayoutProps) => {
           <div className="container">
             <Logo initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }} role="heading" aria-level={1}>
               Portfolio <span style={{ fontWeight: 400 }}>|</span>&nbsp;
-              <BasicMenu label="CV" files={cvFiles} />
+              <BasicMenu label="CV" files={cvFiles} mode={mode} />
             </Logo>
             <NavActions>
               <NavLinks role="list">

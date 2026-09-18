@@ -5,9 +5,26 @@ import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { FaDownload, FaEye } from 'react-icons/fa';
-import { theme } from '../styles/theme';
+import { getThemeValues, type ThemeMode } from '../styles/theme';
 
-const muiTheme = createTheme();
+const createMuiTheme = (mode: ThemeMode) => {
+  const values = getThemeValues(mode);
+  return createTheme({
+    palette: {
+      mode,
+      primary: { main: values.colors.accent },
+      background: { paper: values.colors.glass.card },
+      text: { primary: values.colors.text, secondary: values.colors.textMuted },
+      divider: values.colors.surfaceBorder,
+    },
+    components: {
+      MuiMenu: { styleOverrides: { paper: { backgroundColor: values.colors.glass.card, border: `1px solid ${values.colors.surfaceBorder}`, boxShadow: values.colors.shadow.panel } } },
+      MuiMenuItem: { styleOverrides: { root: { color: values.colors.text, '&:hover': { backgroundColor: values.colors.overlay.light }, '&.Mui-selected': { backgroundColor: values.colors.overlay.light, '&:hover': { backgroundColor: values.colors.overlay.dark } } } } },
+      MuiIconButton: { styleOverrides: { root: { color: values.colors.textMuted, '&:hover': { backgroundColor: values.colors.overlay.light, color: values.colors.accent } } } },
+      MuiButton: { styleOverrides: { root: { color: 'inherit' } } },
+    },
+  });
+};
 
 export type CvFile = {
   label: string;
@@ -19,9 +36,12 @@ export type CvFile = {
 type BasicMenuProps = {
   label: string;
   files: CvFile[];
+  mode: ThemeMode;
 };
 
-export default function BasicMenu({ label, files }: BasicMenuProps) {
+export default function BasicMenu({ label, files, mode }: BasicMenuProps) {
+  const muiTheme = React.useMemo(() => createMuiTheme(mode), [mode]);
+  const values = getThemeValues(mode);
   const id = React.useId();
   const buttonId = `${id}-button`;
   const menuId = `${id}-menu`;
@@ -74,9 +94,9 @@ export default function BasicMenu({ label, files }: BasicMenuProps) {
               sx={{
                 display: 'flex', alignItems: 'center', gap: 2, minWidth: 120,
                 '& .menu-action': { opacity: 0.5, transition: 'opacity 150ms ease, color 150ms ease' },
-                '& .view-action': { color: theme.colors.accent, opacity: 1 },
+                '& .view-action': { color: values.colors.accent, opacity: 1 },
                 '&:has(.download-action:hover) .view-action': { color: 'inherit', opacity: 0.5 },
-                '&:has(.download-action:hover) .download-action': { color: theme.colors.accent, opacity: 1 },
+                '&:has(.download-action:hover) .download-action': { color: values.colors.accent, opacity: 1 },
               }}
             >
               <span>{file.label}</span>
