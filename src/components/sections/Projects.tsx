@@ -51,6 +51,14 @@ const ProjectGrid = styled.div`
     gap: ${theme.spacing.xl};
     margin-top: ${theme.spacing.xl};
   }
+
+  @media (min-width: ${theme.breakpoints.md}) and (max-width: ${theme.breakpoints.lg}) {
+    > *:last-child {
+      grid-column: 1 / -1;
+      justify-self: center;
+      width: calc((100% - ${theme.spacing.xl}) / 2);
+    }
+  }
 `;
 
 const projects: ProjectData[] = [

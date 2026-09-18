@@ -110,7 +110,7 @@ const globalStyles = (themeValues: ThemeValues) => css`
   }
 
   .container {
-    width: min(90%, 1600px);
+    width: min(90%, 1500px);
     margin-inline: auto;
     padding-inline: ${theme.spacing.md};
     position: relative;
