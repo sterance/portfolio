@@ -225,21 +225,6 @@ const Main = styled.main`
   overflow-x: hidden;
 `;
 
-const SkipLink = styled.a`
-  position: absolute;
-  top: -40px;
-  left: 0;
-  background: ${theme.colors.accent};
-  color: ${theme.colors.textDark};
-  padding: ${theme.spacing.sm};
-  z-index: 9999;
-  transition: top 0.2s;
-
-  &:focus {
-    top: 0;
-  }
-`;
-
 const Footer = styled.footer`
   background: ${theme.colors.glass.background};
   backdrop-filter: blur(8px);
@@ -268,8 +253,6 @@ export const Layout = ({ children, mode, onToggleTheme }: LayoutProps) => {
 
   return (
     <LayoutWrapper>
-      <SkipLink href="#main-content">Skip to main content</SkipLink>
-
       <Header role="banner">
         <Nav role="navigation" aria-label="Main navigation">
           <div className="container">
