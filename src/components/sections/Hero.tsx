@@ -130,7 +130,7 @@ export const Hero = () => {
               Full Stack Developer
             </Subtitle>
             <Description role="paragraph">
-              Here to make websites and chew bubblegum, and I'm all out of bubblegum.
+              Here to chew bubblegum and make websites, and I'm all out of bubblegum.
             </Description>
             <SocialLinks role="list" aria-label="Social media links">
               <a 
